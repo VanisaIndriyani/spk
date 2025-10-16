@@ -55,7 +55,7 @@
   <body>
     <div class="header">
       <h2>Hasil Perangkingan BLT-DD</h2>
-      <p>Desa Contoh, Kecamatan Contoh, Kabupaten Contoh</p>
+      <p>Desa Sungai Duri II</p>
       <p><strong>Tanggal Cetak:</strong> {{ date('d/m/Y') }}</p>
     </div>
 

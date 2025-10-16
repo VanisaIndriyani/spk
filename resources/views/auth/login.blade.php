@@ -65,8 +65,8 @@
         <!-- Kartu Login -->
         <div class="card shadow-lg">
           <div class="card-header brand py-3">
-            <h5 class="mb-0 fw-semibold">SPK BLT-DD</h5>
-            <small>Hybrid Fuzzy–SAW</small>
+          <h2>Hasil Perangkingan BLT-DD</h2>
+          <p>Desa Sungai Duri II</p>
           </div>
           <div class="card-body p-4">
             
