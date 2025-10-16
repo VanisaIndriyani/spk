@@ -1,0 +1,5 @@
+:root { --brand:#1e90ff; --brand-600:#187bcd; --bg:#f4f9ff; }
+body { background: var(--bg); }
+.btn-brand { background: var(--brand); color:#fff; }
+.btn-brand:hover { background: var(--brand-600); color:#fff; }
+.card-header.brand { background: linear-gradient(90deg,#1e90ff,#6fb8ff); color:#fff; }
