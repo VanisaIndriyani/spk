@@ -76,7 +76,7 @@
             <tbody>
               @forelse($items as $row)
                 <tr>
-                  <td class="text-muted text-center">{{ $row->id }}</td>
+                <td class="text-muted text-center">{{ $loop->iteration }}</td>
                   <td class="fw-semibold">{{ $row->nama_kepala_keluarga }}</td>
                   <td><code>{{ $row->no_kk }}</code></td>
                   <td>
