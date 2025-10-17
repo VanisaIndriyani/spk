@@ -46,16 +46,20 @@
           
           <div class="mb-3">
             <h6 class="fw-semibold text-dark mb-2">Kriteria yang Dianalisis</h6>
+            @php($kriteria = \Illuminate\Support\Facades\DB::table('kriteria')->select(['kode','nama'])->orderBy('kode')->get())
+            @if($kriteria->count())
             <ul class="list-unstyled small text-muted">
-              <li><i class="bi bi-dot text-primary"></i> Kondisi Rumah</li>
-              <li><i class="bi bi-dot text-primary"></i> Status Kepemilikan</li>
-              <li><i class="bi bi-dot text-primary"></i> Bantuan yang Diterima</li>
-              <li><i class="bi bi-dot text-primary"></i> Kepala Keluarga Perempuan</li>
-              <li><i class="bi bi-dot text-primary"></i> Anggota Sakit/Difabel</li>
-              <li><i class="bi bi-dot text-primary"></i> Jumlah Anggota Keluarga</li>
+              @foreach($kriteria as $kr)
+              <li><i class="bi bi-dot text-primary"></i> {{ $kr->nama }}</li>
+              @endforeach
             </ul>
+            @else
+            <div class="alert alert-warning small mb-0">
+              Belum ada kriteria.
+              <a href="{{ route('admin.kriteria.index') }}" class="alert-link">Tambah di halaman Kriteria</a>.
+            </div>
+            @endif
           </div>
-
           <div class="alert alert-warning border-0">
             <h6 class="fw-semibold mb-2 text-warning">
               <i class="bi bi-exclamation-triangle me-1"></i>
@@ -117,37 +121,50 @@
           <!-- Progress Steps -->
           <div class="mt-4">
             <h6 class="fw-semibold text-dark mb-3">Tahapan Proses</h6>
-            <div class="row">
-              <div class="col-md-3 mb-2">
-                <div class="d-flex align-items-center">
-                  <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 30px; height: 30px; font-size: 12px;">
-                    1
+            <div class="row g-3">
+              <div class="col-md-6 col-lg-4">
+                <div class="border rounded-3 p-3 h-100">
+                  <div class="d-flex align-items-center mb-2">
+                    <span class="badge bg-primary me-2">1</span>
+                    <strong>Fuzzyfikasi</strong>
                   </div>
-                  <small class="text-muted">Normalisasi</small>
+              
                 </div>
               </div>
-              <div class="col-md-3 mb-2">
-                <div class="d-flex align-items-center">
-                  <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 30px; height: 30px; font-size: 12px;">
-                    2
+              <div class="col-md-6 col-lg-4">
+                <div class="border rounded-3 p-3 h-100">
+                  <div class="d-flex align-items-center mb-2">
+                    <span class="badge bg-primary me-2">2</span>
+                    <strong>Defuzzyfikasi</strong>
                   </div>
-                  <small class="text-muted">Fuzzyfikasi</small>
+                
                 </div>
               </div>
-              <div class="col-md-3 mb-2">
-                <div class="d-flex align-items-center">
-                  <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 30px; height: 30px; font-size: 12px;">
-                    3
+              <div class="col-md-6 col-lg-4">
+                <div class="border rounded-3 p-3 h-100">
+                  <div class="d-flex align-items-center mb-2">
+                    <span class="badge bg-primary me-2">3</span>
+                    <strong>Normalisasi (SAW)</strong>
                   </div>
-                  <small class="text-muted">Perhitungan</small>
+                
                 </div>
               </div>
-              <div class="col-md-3 mb-2">
-                <div class="d-flex align-items-center">
-                  <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 30px; height: 30px; font-size: 12px;">
-                    4
+              <div class="col-md-6 col-lg-4">
+                <div class="border rounded-3 p-3 h-100">
+                  <div class="d-flex align-items-center mb-2">
+                    <span class="badge bg-primary me-2">4</span>
+                    <strong>Perhitungan</strong>
                   </div>
-                  <small class="text-muted">Perangkingan</small>
+                
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-4">
+                <div class="border rounded-3 p-3 h-100">
+                  <div class="d-flex align-items-center mb-2">
+                    <span class="badge bg-primary me-2">5</span>
+                    <strong>Perangkingan</strong>
+                  </div>
+                
                 </div>
               </div>
             </div>
