@@ -10,7 +10,8 @@ class AlternatifController extends Controller
 {
     public function index()
     {
-        $items = DB::table('alternatif')->orderByDesc('id')->get();
+        // Urutkan berdasarkan urutan input pertama (tertua -> terbaru)
+        $items = DB::table('alternatif')->orderBy('id')->get();
         return view('roles.admin.alternatif.index', compact('items'));
     }
 

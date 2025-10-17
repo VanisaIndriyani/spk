@@ -48,87 +48,136 @@
             Data Sub Kriteria
           </h5>
         </div>
-        <div class="card-body p-0">
-          <div class="table-responsive">
-            <table class="table table-hover mb-0">
-              <thead class="table-light">
-                <tr>
-                  <th class="border-0 py-3 px-4">No</th>
-                  <th class="border-0 py-3 px-4">Kode Kriteria</th>
-                  <th class="border-0 py-3 px-4">Nama Kriteria</th>
-                  <th class="border-0 py-3 px-4">Nama Sub Kriteria</th>
-                  <th class="border-0 py-3 px-4">Nilai</th>
-                  <th class="border-0 py-3 px-4">Nilai Fuzzy (μ)</th>
-                  <th class="border-0 py-3 px-4">Status</th>
-                  <th class="border-0 py-3 px-4">Keterangan</th>
-                  <th class="border-0 py-3 px-4 text-center">Aksi</th>
-                </tr>
-              </thead>
-              <tbody>
-                @forelse($subKriteria as $index => $item)
+        <div class="card-body">
+          @if(isset($grouped) && $grouped->count())
+            @foreach($grouped as $kode => $rows)
+              <div class="card border-0 shadow-sm mb-3">
+                <div class="card-header bg-white d-flex align-items-center">
+                  <span class="badge bg-primary me-2">{{ $kode }}</span>
+                  <strong>{{ optional($rows->first())->nama_kriteria }}</strong>
+                </div>
+                <div class="card-body p-0">
+                  <div class="table-responsive">
+                    <table class="table table-sm mb-0">
+                      <thead class="table-light">
+                        <tr>
+                          <th class="border-0 py-2 px-3" style="width:56px;">No</th>
+                          <th class="border-0 py-2 px-3">Nama Sub Kriteria</th>
+                          <th class="border-0 py-2 px-3">Nilai</th>
+                          <th class="border-0 py-2 px-3">Nilai Fuzzy (μ)</th>
+                          <th class="border-0 py-2 px-3">Status</th>
+                          <th class="border-0 py-2 px-3">Keterangan</th>
+                          <th class="border-0 py-2 px-3 text-center" style="width:120px;">Aksi</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @php $num = 1; @endphp
+                        @foreach($rows as $item)
+                          <tr>
+                            <td class="px-3 py-2">{{ $num++ }}</td>
+                            <td class="px-3 py-2 fw-medium">{{ $item->nama_sub_kriteria }}</td>
+                            <td class="px-3 py-2">{{ $item->nilai }}</td>
+                            <td class="px-3 py-2">
+                              @if($item->is_fuzzy && $item->nilai_fuzzy !== null)
+                                <span class="badge bg-info">μ = {{ $item->nilai_fuzzy }}</span>
+                              @else
+                                <span class="text-muted">-</span>
+                              @endif
+                            </td>
+                            <td class="px-3 py-2">
+                              @if($item->is_fuzzy)
+                                <span class="badge bg-success"><i class="bi bi-check-circle me-1"></i> Difuzzykan</span>
+                              @else
+                                <span class="badge bg-secondary"><i class="bi bi-x-circle me-1"></i> Tidak Difuzzykan</span>
+                              @endif
+                            </td>
+                            <td class="px-3 py-2"><small class="text-muted">{{ $item->keterangan ?? '-' }}</small></td>
+                            <td class="px-3 py-2 text-center">
+                              <div class="btn-group" role="group">
+                                <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editModal"
+                                  data-id="{{ $item->id }}" data-kode="{{ $item->kode_kriteria }}" data-nama="{{ $item->nama_sub_kriteria }}"
+                                  data-nilai="{{ $item->nilai }}" data-fuzzy="{{ $item->nilai_fuzzy }}" data-is-fuzzy="{{ $item->is_fuzzy ? '1' : '0' }}"
+                                  data-keterangan="{{ $item->keterangan }}">
+                                  <i class="bi bi-pencil"></i>
+                                </button>
+                                <button class="btn btn-sm btn-outline-danger" onclick="confirmDelete({{ $item->id }})">
+                                  <i class="bi bi-trash"></i>
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        @endforeach
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            @endforeach
+          @else
+            <div class="table-responsive">
+              <table class="table table-hover mb-0">
+                <thead class="table-light">
                   <tr>
-                    <td class="px-4 py-3">{{ $index + 1 }}</td>
-                    <td class="px-4 py-3">
-                      <span class="badge bg-primary">{{ $item->kode_kriteria }}</span>
-                    </td>
-                    <td class="px-4 py-3">{{ $item->nama_kriteria }}</td>
-                    <td class="px-4 py-3 fw-medium">{{ $item->nama_sub_kriteria }}</td>
-                    <td class="px-4 py-3">{{ $item->nilai }}</td>
-                    <td class="px-4 py-3">
-                      @if($item->is_fuzzy && $item->nilai_fuzzy !== null)
-                        <span class="badge bg-info">μ = {{ $item->nilai_fuzzy }}</span>
-                      @else
-                        <span class="text-muted">-</span>
-                      @endif
-                    </td>
-                    <td class="px-4 py-3">
-                      @if($item->is_fuzzy)
-                        <span class="badge bg-success">
-                          <i class="bi bi-check-circle me-1"></i>
-                          Difuzzykan
-                        </span>
-                      @else
-                        <span class="badge bg-secondary">
-                          <i class="bi bi-x-circle me-1"></i>
-                          Tidak Difuzzykan
-                        </span>
-                      @endif
-                    </td>
-                    <td class="px-4 py-3">
-                      <small class="text-muted">{{ $item->keterangan ?? '-' }}</small>
-                    </td>
-                    <td class="px-4 py-3 text-center">
-                      <div class="btn-group" role="group">
-                        <button class="btn btn-sm btn-outline-primary" 
-                                data-bs-toggle="modal" 
-                                data-bs-target="#editModal"
-                                data-id="{{ $item->id }}"
-                                data-kode="{{ $item->kode_kriteria }}"
-                                data-nama="{{ $item->nama_sub_kriteria }}"
-                                data-nilai="{{ $item->nilai }}"
-                                data-fuzzy="{{ $item->nilai_fuzzy }}"
-                                data-is-fuzzy="{{ $item->is_fuzzy ? '1' : '0' }}"
-                                data-keterangan="{{ $item->keterangan }}">
-                          <i class="bi bi-pencil"></i>
-                        </button>
-                        <button class="btn btn-sm btn-outline-danger" 
-                                onclick="confirmDelete({{ $item->id }})">
-                          <i class="bi bi-trash"></i>
-                        </button>
-                      </div>
-                    </td>
+                    <th class="border-0 py-3 px-4">No</th>
+                    <th class="border-0 py-3 px-4">Kode Kriteria</th>
+                    <th class="border-0 py-3 px-4">Nama Kriteria</th>
+                    <th class="border-0 py-3 px-4">Nama Sub Kriteria</th>
+                    <th class="border-0 py-3 px-4">Nilai</th>
+                    <th class="border-0 py-3 px-4">Nilai Fuzzy (μ)</th>
+                    <th class="border-0 py-3 px-4">Status</th>
+                    <th class="border-0 py-3 px-4">Keterangan</th>
+                    <th class="border-0 py-3 px-4 text-center">Aksi</th>
                   </tr>
-                @empty
-                  <tr>
-                    <td colspan="9" class="text-center py-5 text-muted">
-                      <i class="bi bi-inbox fs-1 d-block mb-3"></i>
-                      Belum ada data sub kriteria
-                    </td>
-                  </tr>
-                @endforelse
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody>
+                  @forelse($subKriteria as $index => $item)
+                    <tr>
+                      <td class="px-4 py-3">{{ $index + 1 }}</td>
+                      <td class="px-4 py-3"><span class="badge bg-primary">{{ $item->kode_kriteria }}</span></td>
+                      <td class="px-4 py-3">{{ $item->nama_kriteria }}</td>
+                      <td class="px-4 py-3 fw-medium">{{ $item->nama_sub_kriteria }}</td>
+                      <td class="px-4 py-3">{{ $item->nilai }}</td>
+                      <td class="px-4 py-3">
+                        @if($item->is_fuzzy && $item->nilai_fuzzy !== null)
+                          <span class="badge bg-info">μ = {{ $item->nilai_fuzzy }}</span>
+                        @else
+                          <span class="text-muted">-</span>
+                        @endif
+                      </td>
+                      <td class="px-4 py-3">
+                        @if($item->is_fuzzy)
+                          <span class="badge bg-success"><i class="bi bi-check-circle me-1"></i> Difuzzykan</span>
+                        @else
+                          <span class="badge bg-secondary"><i class="bi bi-x-circle me-1"></i> Tidak Difuzzykan</span>
+                        @endif
+                      </td>
+                      <td class="px-4 py-3"><small class="text-muted">{{ $item->keterangan ?? '-' }}</small></td>
+                      <td class="px-4 py-3 text-center">
+                        <div class="btn-group" role="group">
+                          <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editModal"
+                            data-id="{{ $item->id }}" data-kode="{{ $item->kode_kriteria }}" data-nama="{{ $item->nama_sub_kriteria }}"
+                            data-nilai="{{ $item->nilai }}" data-fuzzy="{{ $item->nilai_fuzzy }}" data-is-fuzzy="{{ $item->is_fuzzy ? '1' : '0' }}"
+                            data-keterangan="{{ $item->keterangan }}">
+                            <i class="bi bi-pencil"></i>
+                          </button>
+                          <button class="btn btn-sm btn-outline-danger" onclick="confirmDelete({{ $item->id }})">
+                            <i class="bi bi-trash"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  @empty
+                    <tr>
+                      <td colspan="9" class="text-center py-5 text-muted">
+                        <i class="bi bi-inbox fs-1 d-block mb-3"></i>
+                        Belum ada data sub kriteria
+                      </td>
+                    </tr>
+                  @endforelse
+                </tbody>
+              </table>
+            </div>
+          @endif
         </div>
       </div>
     </div>

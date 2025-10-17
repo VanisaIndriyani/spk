@@ -17,8 +17,10 @@ class SubKriteriaController extends Controller
             ->orderBy('kriteria.kode')
             ->orderBy('sub_kriteria.nilai')
             ->get();
+        // Kelompokkan per kriteria agar tampilan tidak menumpuk
+        $grouped = $subKriteria->groupBy('kode_kriteria');
         
-        return view('roles.admin.sub_kriteria.index', compact('kriteria', 'subKriteria'));
+        return view('roles.admin.sub_kriteria.index', compact('kriteria', 'subKriteria', 'grouped'));
     }
 
     public function store(Request $request)

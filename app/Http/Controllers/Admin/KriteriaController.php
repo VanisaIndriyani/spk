@@ -11,17 +11,26 @@ class KriteriaController extends Controller
     public function index()
     {
         $defaults = [
-            ['C1','Kondisi Rumah','cost',0.15],
+            ['C1','Kondisi Rumah','cost',0.10],
             ['C2','Status Kepemilikan Rumah','cost',0.15],
-            ['C3','Menerima Bantuan (PKH/dll)','benefit',0.20],
-            ['C4','Kepala Keluarga Perempuan','benefit',0.20],
-            ['C5','Anggota Sakit/Difabel','benefit',0.20],
+            ['C3','Tidak Menerima PKH/dll','benefit',0.20],
+            ['C4','Perempuan Kepala Keluarga','benefit',0.20],
+            ['C5','Anggota Sakit/Difabel','benefit',0.25],
             ['C6','Jumlah Anggota Keluarga','benefit',0.10],
         ];
         foreach ($defaults as $d) {
-            DB::table('kriteria')->updateOrInsert(['kode'=>$d[0]], [
-                'nama'=>$d[1], 'jenis'=>$d[2], 'bobot'=>$d[3], 'updated_at'=>now(), 'created_at'=>now()
-            ]);
+            // Only insert missing defaults; do not overwrite existing bobot edits
+            $exists = DB::table('kriteria')->where('kode', $d[0])->exists();
+            if (!$exists) {
+                DB::table('kriteria')->insert([
+                    'kode' => $d[0],
+                    'nama' => $d[1],
+                    'jenis' => $d[2],
+                    'bobot' => $d[3],
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
         }
         $rows = DB::table('kriteria')->orderBy('kode')->get();
         return view('roles.admin.kriteria.index', compact('rows'));

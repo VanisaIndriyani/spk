@@ -41,6 +41,9 @@
           <label class="form-label fw-medium">C1 - Kondisi Rumah <span class="badge bg-secondary">cost</span> <span class="badge bg-info">fuzzy</span></label>
           <select class="form-select" name="C1" required>
             @php $v = $nilai['C1']->nilai_linguistik ?? null; @endphp
+            @if(!$v)
+            <option value="" selected disabled>Pilih nilai</option>
+            @endif
             <option value="Layak" {{ $v==='Layak'?'selected':'' }}>Layak</option>
             <option value="Cukup Layak" {{ $v==='Cukup Layak'?'selected':'' }}>Cukup Layak</option>
             <option value="Sedang" {{ $v==='Sedang'?'selected':'' }}>Sedang</option>
@@ -52,6 +55,9 @@
           <label class="form-label fw-medium">C2 - Status Kepemilikan Rumah <span class="badge bg-secondary">cost</span> <span class="badge bg-info">fuzzy</span></label>
           <select class="form-select" name="C2" required>
             @php $v = $nilai['C2']->nilai_linguistik ?? null; @endphp
+            @if(!$v)
+            <option value="" selected disabled>Pilih nilai</option>
+            @endif
             <option value="Milik Sendiri" {{ $v==='Milik Sendiri'?'selected':'' }}>Milik Sendiri</option>
             <option value="Milik Warisan / Tidak Jelas" {{ $v==='Milik Warisan / Tidak Jelas'?'selected':'' }}>Milik Warisan / Tidak Jelas</option>
             <option value="Sewa" {{ $v==='Sewa'?'selected':'' }}>Sewa</option>
@@ -63,6 +69,9 @@
           <label class="form-label fw-medium">C3 - Menerima Bantuan (PKH/dll) <span class="badge bg-success">benefit</span></label>
           <select class="form-select" name="C3" required>
             @php $v = $nilai['C3']->nilai_linguistik ?? null; @endphp
+            @if(!$v)
+            <option value="" selected disabled>Pilih nilai</option>
+            @endif
             <option value="Menerima" {{ $v==='Menerima'?'selected':'' }}>Menerima</option>
             <option value="Tidak Menerima" {{ $v==='Tidak Menerima'?'selected':'' }}>Tidak Menerima</option>
           </select>
@@ -71,6 +80,9 @@
           <label class="form-label fw-medium">C4 - Kepala Keluarga Perempuan <span class="badge bg-success">benefit</span></label>
           <select class="form-select" name="C4" required>
             @php $v = $nilai['C4']->nilai_linguistik ?? null; @endphp
+            @if(!$v)
+            <option value="" selected disabled>Pilih nilai</option>
+            @endif
             <option value="Tidak" {{ $v==='Tidak'?'selected':'' }}>Tidak</option>
             <option value="Ya" {{ $v==='Ya'?'selected':'' }}>Ya</option>
           </select>
@@ -79,6 +91,9 @@
           <label class="form-label fw-medium">C5 - Anggota Sakit/Difabel <span class="badge bg-success">benefit</span></label>
           <select class="form-select" name="C5" required>
             @php $v = $nilai['C5']->nilai_linguistik ?? null; @endphp
+            @if(!$v)
+            <option value="" selected disabled>Pilih nilai</option>
+            @endif
             <option value="Tidak" {{ $v==='Tidak'?'selected':'' }}>Tidak</option>
             <option value="Ada" {{ $v==='Ada'?'selected':'' }}>Ada</option>
           </select>
@@ -87,6 +102,9 @@
           <label class="form-label fw-medium">C6 - Jumlah Anggota Keluarga <span class="badge bg-success">benefit</span> <span class="badge bg-info">fuzzy</span></label>
           <select class="form-select" name="C6" required>
             @php $v = $nilai['C6']->nilai_linguistik ?? null; @endphp
+            @if(!$v)
+            <option value="" selected disabled>Pilih nilai</option>
+            @endif
             <option value="Sangat Sedikit (1-2 orang)" {{ $v==='Sangat Sedikit (1-2 orang)'?'selected':'' }}>Sangat Sedikit (1-2 orang)</option>
             <option value="Sedikit (3-4 orang)" {{ $v==='Sedikit (3-4 orang)'?'selected':'' }}>Sedikit (3-4 orang)</option>
             <option value="Sedang (5-6 orang)" {{ $v==='Sedang (5-6 orang)'?'selected':'' }}>Sedang (5-6 orang)</option>

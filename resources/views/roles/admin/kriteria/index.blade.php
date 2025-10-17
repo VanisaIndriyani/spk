@@ -80,10 +80,7 @@
                       <form method="POST" action="{{ route('admin.kriteria.update', $item->kode) }}" class="d-flex gap-2 align-items-center">
                         @csrf @method('PUT')
                         <input type="number" step="0.01" min="0" max="1" class="form-control form-control-sm" 
-                               name="bobot" value="{{ $item->bobot }}" required style="width: 100px;">
-                        <button class="btn btn-sm btn-outline-primary" type="submit">
-                          <i class="bi bi-save"></i>
-                        </button>
+                               name="bobot" value="{{ $item->bobot }}" required style="width: 100px;" onchange="this.form.submit()">
                       </form>
                     </td>
                     <td class="px-4 py-3 text-center">

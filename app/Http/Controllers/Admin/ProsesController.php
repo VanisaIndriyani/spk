@@ -72,7 +72,6 @@ class ProsesController extends Controller
                 if (!$base) continue;
                 
                 $crisp = $data['crisp'];
-                $fuzzy = $data['fuzzy'];
                 
                 // Normalisasi nilai
                 if ($base['jenis'] === 'benefit') {
@@ -81,23 +80,17 @@ class ProsesController extends Controller
                     $norm = ($base['min'] ?: 1) / $crisp;
                 }
                 
-                // Jika ada nilai fuzzy, gunakan untuk perhitungan
-                if ($fuzzy !== null) {
-                    // Gunakan nilai fuzzy untuk perhitungan
-                    $fuzzyNorm = $fuzzy; // Nilai fuzzy sudah dalam range 0-1
-                    $total += $fuzzyNorm * $base['bobot'];
-                } else {
-                    // Gunakan nilai normalisasi biasa
-                    $total += $norm * $base['bobot'];
-                }
+                // Gunakan nilai normalisasi crisp untuk perhitungan bobot (sesuai SAW)
+                $total += $norm * $base['bobot'];
                 
-                // Simpan nilai normalisasi & bobot
+                // Simpan nilai normalisasi & nilai bobot per-kriteria (bukan akumulasi total)
+                $weighted = $norm * $base['bobot'];
                 DB::table('nilai_kriteria')
                     ->where('alternatif_id',$altId)
                     ->where('kode_kriteria',$kode)
                     ->update([
                         'nilai_normalisasi' => $norm,
-                        'nilai_bobot' => $total,
+                        'nilai_bobot' => $weighted,
                         'updated_at' => now(),
                     ]);
             }
