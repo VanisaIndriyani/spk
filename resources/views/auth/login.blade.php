@@ -66,7 +66,7 @@
         <div class="card shadow-lg">
           <div class="card-header brand py-3">
             <h1>Hasil Perangkingan BLT-DD</h1>
-          <h2>Sistem Pendukung Keputusan Cerdas BLT-DD</h2>
+         
           <p>Desa Sungai Duri II</p>
           </div>
           <div class="card-body p-4">
