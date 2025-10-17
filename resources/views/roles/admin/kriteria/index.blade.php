@@ -228,7 +228,7 @@ document.getElementById('editModal').addEventListener('show.bs.modal', function 
   const jenis = button.getAttribute('data-jenis');
   const bobot = button.getAttribute('data-bobot');
   
-  document.getElementById('editForm').action = `/admin/kriteria/${kode}`;
+  document.getElementById('editForm').action = `{{ url('admin/kriteria') }}/${kode}`;
   document.getElementById('edit_kode').value = kode;
   document.getElementById('edit_nama').value = nama;
   document.getElementById('edit_jenis').value = jenis;
@@ -238,7 +238,7 @@ document.getElementById('editModal').addEventListener('show.bs.modal', function 
 // Delete Confirmation
 function confirmDelete(kode) {
   if (confirm('Apakah Anda yakin ingin menghapus kriteria ini?')) {
-    document.getElementById('deleteForm').action = `/admin/kriteria/${kode}`;
+    document.getElementById('deleteForm').action = `{{ url('admin/kriteria') }}/${kode}`;
     document.getElementById('deleteForm').submit();
   }
 }
