@@ -15,7 +15,7 @@ class KriteriaController extends Controller
             ['C2','Status Kepemilikan Rumah','cost',0.15],
             ['C3','Tidak Menerima PKH/dll','benefit',0.20],
             ['C4','Perempuan Kepala Keluarga','benefit',0.20],
-            ['C5','Anggota Sakit/Difabel','benefit',0.20],
+            ['C5','Anggota Sakit/Difabel','benefit',0.25],
             ['C6','Jumlah Anggota Keluarga','benefit',0.10],
         ];
         foreach ($defaults as $d) {
@@ -32,8 +32,8 @@ class KriteriaController extends Controller
                 ]);
             }
         }
-        // Pastikan bobot C5 mengikuti spesifikasi terbaru (0.20)
-        DB::table('kriteria')->where('kode','C5')->update(['bobot'=>0.20, 'updated_at'=>now()]);
+        // Sesuaikan bobot C5 ke 0.25 agar total bobot = 1.00 sesuai manual
+        DB::table('kriteria')->where('kode','C5')->update(['bobot'=>0.25, 'updated_at'=>now()]);
         $rows = DB::table('kriteria')->orderBy('kode')->get();
         return view('roles.admin.kriteria.index', compact('rows'));
     }
