@@ -271,7 +271,7 @@ document.getElementById('editModal').addEventListener('show.bs.modal', function 
   const keterangan = button.getAttribute('data-keterangan');
   
   
-  document.getElementById('editForm').action = `/admin/sub-kriteria/${id}`;
+  document.getElementById('editForm').action = `{{ url('admin/sub-kriteria') }}/${id}`;
   document.getElementById('edit_nama').value = nama;
   document.getElementById('edit_nilai').value = nilai;
   document.getElementById('edit_fuzzy').value = fuzzy || '';
@@ -282,7 +282,7 @@ document.getElementById('editModal').addEventListener('show.bs.modal', function 
 // Delete Confirmation
 function confirmDelete(id) {
   if (confirm('Apakah Anda yakin ingin menghapus sub kriteria ini?')) {
-    document.getElementById('deleteForm').action = `/admin/sub-kriteria/${id}`;
+    document.getElementById('deleteForm').action = `{{ url('admin/sub-kriteria') }}/${id}`;
     document.getElementById('deleteForm').submit();
   }
 }
