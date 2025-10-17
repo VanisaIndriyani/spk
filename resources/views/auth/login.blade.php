@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Login - SPK BLT-DD</title>
+  <title>Login - Sistem Pendukung Keputusan Cerdas BLT-DD</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
   <style>
@@ -65,7 +65,7 @@
         <!-- Kartu Login -->
         <div class="card shadow-lg">
           <div class="card-header brand py-3">
-          <h2>Hasil Perangkingan BLT-DD</h2>
+          <h2>Sistem Pendukung Keputusan Cerdas BLT-DD</h2>
           <p>Desa Sungai Duri II</p>
           </div>
           <div class="card-body p-4">
@@ -100,7 +100,7 @@
           </div>
 
           <div class="card-footer text-center py-2">
-            <small class="text-secondary">&copy; {{ date('Y') }} Desa Sungai Duri II - SPK BLT-DD</small>
+            <small class="text-secondary">&copy; {{ date('Y') }} Desa Sungai Duri II - Sistem Pendukung Keputusan Cerdas BLT-DD</small>
           </div>
         </div>
       </div>

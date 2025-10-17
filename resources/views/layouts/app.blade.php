@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ $title ?? 'SPK BLT-DD' }}</title>
+    <title>{{ $title ?? 'Sistem Pendukung Keputusan Cerdas BLT-DD' }}</title>
 
     <!-- Bootstrap & Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -126,7 +126,7 @@
 
         {{-- Brand --}}
         <a class="navbar-brand fw-semibold text-primary" href="{{ url('/') }}">
-          <i class="bi bi-house-fill me-1"></i> SPK BLT-DD
+          <i class="bi bi-house-fill me-1"></i> Sistem Pendukung Keputusan Cerdas BLT-DD
         </a>
 
         {{-- Tombol Toggle Navbar (mobile) --}}
@@ -179,18 +179,36 @@
             <a class="nav-link {{ request()->routeIs('admin.kriteria.*') ? 'active' : '' }}" href="{{ route('admin.kriteria.index') }}">
               <i class="bi bi-diagram-3"></i><span>Kriteria & Bobot</span>
             </a>
+            <a class="nav-link {{ request()->routeIs('admin.sub-kriteria.*') ? 'active' : '' }}" href="{{ route('admin.sub-kriteria.index') }}">
+              <i class="bi bi-list-check"></i><span>Sub Kriteria</span>
+            </a>
             <a class="nav-link {{ request()->routeIs('admin.proses*') ? 'active' : '' }}" href="{{ route('admin.proses') }}">
               <i class="bi bi-cpu"></i><span>Proses</span>
             </a>
             <a class="nav-link {{ request()->routeIs('admin.hasil*') ? 'active' : '' }}" href="{{ route('admin.hasil') }}">
               <i class="bi bi-bar-chart"></i><span>Hasil</span>
             </a>
+            <a class="nav-link {{ request()->routeIs('pesan*') ? 'active' : '' }}" href="{{ route('pesan.index') }}">
+              <i class="bi bi-envelope"></i><span>Pesan</span>
+            </a>
+            <a class="nav-link {{ request()->routeIs('profile*') ? 'active' : '' }}" href="{{ route('profile.index') }}">
+              <i class="bi bi-person-circle"></i><span>Profile</span>
+            </a>
           @elseif(auth()->user()->role==='kepala_desa')
             <a class="nav-link {{ request()->routeIs('kades.dashboard') ? 'active' : '' }}" href="{{ route('kades.dashboard') }}">
               <i class="bi bi-speedometer2"></i><span>Dashboard</span>
             </a>
+            <a class="nav-link {{ request()->routeIs('kades.alternatif') ? 'active' : '' }}" href="{{ route('kades.alternatif') }}">
+              <i class="bi bi-people"></i><span>Data Alternatif</span>
+            </a>
             <a class="nav-link {{ request()->routeIs('kades.hasil') ? 'active' : '' }}" href="{{ route('kades.hasil') }}">
               <i class="bi bi-graph-up"></i><span>Hasil</span>
+            </a>
+            <a class="nav-link {{ request()->routeIs('pesan*') ? 'active' : '' }}" href="{{ route('pesan.index') }}">
+              <i class="bi bi-envelope"></i><span>Pesan</span>
+            </a>
+            <a class="nav-link {{ request()->routeIs('profile*') ? 'active' : '' }}" href="{{ route('profile.index') }}">
+              <i class="bi bi-person-circle"></i><span>Profile</span>
             </a>
           @endif
         </nav>
@@ -204,7 +222,7 @@
 
     {{-- Footer --}}
     <footer class="py-2 border-top bg-white text-center text-muted small fixed-bottom">
-      <span>&copy; {{ date('Y') }} SPK BLT-DD — Hybrid Fuzzy–SAW</span>
+      <span>&copy; {{ date('Y') }} Sistem Pendukung Keputusan Cerdas BLT-DD — Hybrid Fuzzy–SAW</span>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

@@ -22,7 +22,7 @@ class ProsesController extends Controller
 
         // Ambil nilai crisp per alternatif per kriteria
         $nilai = DB::table('nilai_kriteria')
-            ->select('alternatif_id','kode_kriteria','nilai_crisp')
+            ->select('alternatif_id','kode_kriteria','nilai_crisp','nilai_fuzzy')
             ->get();
         if ($nilai->isEmpty()) {
             return back()->with('error','Belum ada nilai kriteria.');
@@ -33,7 +33,10 @@ class ProsesController extends Controller
         $perAlternatif = [];
         foreach ($nilai as $n) {
             $perKriteria[$n->kode_kriteria][] = $n->nilai_crisp;
-            $perAlternatif[$n->alternatif_id][$n->kode_kriteria] = $n->nilai_crisp;
+            $perAlternatif[$n->alternatif_id][$n->kode_kriteria] = [
+                'crisp' => $n->nilai_crisp,
+                'fuzzy' => $n->nilai_fuzzy
+            ];
         }
 
         // Pastikan setiap alternatif memiliki 6 kriteria
@@ -60,26 +63,41 @@ class ProsesController extends Controller
         // Bersihkan hasil sebelumnya
         DB::table('hasil_perangkingan')->truncate();
 
-        // Hitung skor akhir per alternatif
+        // Hitung skor akhir per alternatif menggunakan Fuzzy-SAW
         $skors = [];
         foreach ($alternatifLengkap as $altId => $vals) {
             $total = 0.0;
-            foreach ($vals as $kode => $crisp) {
+            foreach ($vals as $kode => $data) {
                 $base = $normBase[$kode] ?? null;
                 if (!$base) continue;
+                
+                $crisp = $data['crisp'];
+                $fuzzy = $data['fuzzy'];
+                
+                // Normalisasi nilai
                 if ($base['jenis'] === 'benefit') {
                     $norm = $crisp / ($base['max'] ?: 1);
                 } else { // cost
                     $norm = ($base['min'] ?: 1) / $crisp;
                 }
-                $total += $norm * $base['bobot'];
-                // simpan nilai normalisasi & bobot (opsional)
+                
+                // Jika ada nilai fuzzy, gunakan untuk perhitungan
+                if ($fuzzy !== null) {
+                    // Gunakan nilai fuzzy untuk perhitungan
+                    $fuzzyNorm = $fuzzy; // Nilai fuzzy sudah dalam range 0-1
+                    $total += $fuzzyNorm * $base['bobot'];
+                } else {
+                    // Gunakan nilai normalisasi biasa
+                    $total += $norm * $base['bobot'];
+                }
+                
+                // Simpan nilai normalisasi & bobot
                 DB::table('nilai_kriteria')
                     ->where('alternatif_id',$altId)
                     ->where('kode_kriteria',$kode)
                     ->update([
                         'nilai_normalisasi' => $norm,
-                        'nilai_bobot' => $norm * $base['bobot'],
+                        'nilai_bobot' => $total,
                         'updated_at' => now(),
                     ]);
             }
