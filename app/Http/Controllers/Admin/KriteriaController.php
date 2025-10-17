@@ -56,16 +56,26 @@ class KriteriaController extends Controller
 
     public function update(Request $request, string $kode)
     {
-        $data = $request->validate([
-            'nama' => 'required|string|max:255',
-            'jenis' => 'required|in:benefit,cost',
-            'bobot' => 'required|numeric|min:0|max:1'
-        ]);
-
-        DB::table('kriteria')->where('kode', $kode)->update([
-            ...$data,
-            'updated_at' => now()
-        ]);
+        // Allow partial update for inline bobot change
+        if ($request->has('bobot') && !$request->has('nama') && !$request->has('jenis')) {
+            $data = $request->validate([
+                'bobot' => 'required|numeric|min:0|max:1',
+            ]);
+            DB::table('kriteria')->where('kode', $kode)->update([
+                'bobot' => $data['bobot'],
+                'updated_at' => now(),
+            ]);
+        } else {
+            $data = $request->validate([
+                'nama' => 'required|string|max:255',
+                'jenis' => 'required|in:benefit,cost',
+                'bobot' => 'required|numeric|min:0|max:1'
+            ]);
+            DB::table('kriteria')->where('kode', $kode)->update([
+                ...$data,
+                'updated_at' => now()
+            ]);
+        }
 
         return back()->with('success', 'Kriteria berhasil diperbarui.');
     }
