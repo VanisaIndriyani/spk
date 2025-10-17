@@ -42,6 +42,7 @@ Route::middleware(['auth','role:admin'])->prefix('admin')->name('admin.')->group
     Route::get('proses', [ProsesController::class,'index'])->name('proses');
     Route::post('proses/run', [ProsesController::class,'run'])->name('proses.run');
     Route::get('hasil', [HasilController::class,'index'])->name('hasil');
+  Route::get('hasil/{id}', [HasilController::class,'show'])->name('hasil.show');
     Route::get('hasil/pdf', [HasilController::class,'pdf'])->name('hasil.pdf');
 });
 

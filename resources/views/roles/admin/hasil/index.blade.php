@@ -40,7 +40,11 @@
                   #{{ $row->peringkat }}
                 </span>
               </td>
-              <td class="fw-semibold">{{ $row->nama_kepala_keluarga }}</td>
+              <td class="fw-semibold">
+                <a href="{{ route('admin.hasil.show', $row->alternatif_id) }}" class="text-decoration-none">
+                  {{ $row->nama_kepala_keluarga }}
+                </a>
+              </td>
               <td><code>{{ $row->no_kk }}</code></td>
               <td class="text-center"><strong>{{ number_format($row->skor_akhir, 4) }}</strong></td>
             </tr>
