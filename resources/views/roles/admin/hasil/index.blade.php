@@ -14,7 +14,7 @@
         <span class="input-group-text bg-light border-0"><i class="bi bi-search text-muted"></i></span>
         <input type="text" id="hasilSearch" class="form-control border-0 shadow-sm rounded-3" placeholder="Cari nama atau No KK...">
       </div>
-      <a class="btn btn-brand d-flex align-items-center gap-2 shadow-sm" href="{{ route('admin.hasil.pdf') }}">
+      <a class="btn btn-brand d-flex align-items-center gap-2 shadow-sm" href="{{ auth()->user()->role === 'admin' ? route('admin.hasil.pdf') : route('kades.hasil.pdf') }}">
         <i class="bi bi-filetype-pdf"></i> Cetak PDF
       </a>
     </div>
@@ -41,9 +41,13 @@
                 </span>
               </td>
               <td class="fw-semibold">
-                <a href="{{ route('admin.hasil.show', $row->alternatif_id) }}" class="text-decoration-none">
+                @if(auth()->user()->role === 'admin')
+                  <a href="{{ route('admin.hasil.show', $row->alternatif_id) }}" class="text-decoration-none">
+                    {{ $row->nama_kepala_keluarga }}
+                  </a>
+                @else
                   {{ $row->nama_kepala_keluarga }}
-                </a>
+                @endif
               </td>
               <td><code>{{ $row->no_kk }}</code></td>
               <td class="text-center"><strong>{{ number_format($row->skor_akhir, 4) }}</strong></td>
