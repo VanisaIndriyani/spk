@@ -50,4 +50,6 @@ Route::middleware(['auth','role:kepala_desa'])->prefix('kades')->name('kades.')-
     Route::get('/dashboard', [KadesDashboard::class,'index'])->name('dashboard');
     Route::get('/alternatif', [KadesDashboard::class,'alternatif'])->name('alternatif');
     Route::get('/hasil', [HasilController::class,'index'])->name('hasil');
+    Route::get('/hasil/pdf', [HasilController::class,'pdf'])->name('hasil.pdf'); // <--- tambah ini
 });
+
